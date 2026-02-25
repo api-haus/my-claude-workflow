@@ -28,26 +28,32 @@ Examples:
 | Refactors | `refactor/`   |
 | Docs      | `docs/`       |
 
-## Step 3: Get Project Name
+## Step 3: Get Repo Root
 
 ```bash
-basename "$(pwd)"
+git rev-parse --show-toplevel
 ```
 
 ## Step 4: Create or Switch to Worktree
 
+**CRITICAL:** Always branch from local `main`, NEVER from HEAD. HEAD may be on a
+stale commit (e.g. if you last worked on a different branch or the worktree was
+created from an old session). Using `main` as the explicit start-point guarantees
+the worktree has all recent commits.
+
 ```bash
-PROJECT_NAME=$(basename "$(pwd)")
+REPO_ROOT=$(git rev-parse --show-toplevel)
 SLUG="<your-generated-slug>"
 TYPE="<feat|fix|refactor|docs>"
 
-if [ -d "../${PROJECT_NAME}-${SLUG}" ]; then
-    cd "../${PROJECT_NAME}-${SLUG}"
+if [ -d "${REPO_ROOT}/.claude/worktrees/${SLUG}" ]; then
+    cd "${REPO_ROOT}/.claude/worktrees/${SLUG}"
     echo "Switched to existing worktree"
 else
-    git worktree add "../${PROJECT_NAME}-${SLUG}" -b "${TYPE}/${SLUG}"
-    cd "../${PROJECT_NAME}-${SLUG}"
-    echo "Created new worktree"
+    mkdir -p "${REPO_ROOT}/.claude/worktrees"
+    git worktree add "${REPO_ROOT}/.claude/worktrees/${SLUG}" -b "${TYPE}/${SLUG}" main
+    cd "${REPO_ROOT}/.claude/worktrees/${SLUG}"
+    echo "Created new worktree from main"
 fi
 ```
 
@@ -72,13 +78,13 @@ Use **absolute paths** so the header survives context compression and fresh sess
 ## Worktree Context
 - **Slug:** `<slug>`
 - **Todo:** `docs/todo/<slug>.md`
-- **Worktree:** `/home/midori/_dev/${PROJECT_NAME}-<slug>`
+- **Worktree:** `${REPO_ROOT}/.claude/worktrees/<slug>`
 - **Branch:** `<type>/<slug>`
 
 ### ⚠️ CRITICAL: Working Directory
 **ALL file operations (Read, Edit, Write, Glob, Grep) MUST use absolute paths in the worktree:**
-- ✅ `/home/midori/_dev/${PROJECT_NAME}-<slug>/src/...`
-- ❌ `/home/midori/_dev/${PROJECT_NAME}/src/...` (WRONG - this is main tree)
+- ✅ `${REPO_ROOT}/.claude/worktrees/<slug>/src/...`
+- ❌ `${REPO_ROOT}/src/...` (WRONG - this is main tree)
 
 Do NOT work in the main repository. The worktree is your working directory.
 
@@ -94,7 +100,7 @@ This is NOT optional. The plan file MUST start with this header.
 |-----------|--------|---------|
 | Slug | kebab-case, 2-3 words | `player-collision` |
 | Todo file | `docs/todo/<slug>.md` | `docs/todo/player-collision.md` |
-| Worktree | `/home/midori/_dev/${PROJECT_NAME}-<slug>` | `/home/midori/_dev/myproject-player-collision` |
+| Worktree | `${REPO_ROOT}/.claude/worktrees/<slug>` | `${REPO_ROOT}/.claude/worktrees/player-collision` |
 | Branch | `<type>/<slug>` | `feat/player-collision` |
 
 The `<slug>` MUST be identical across all three for `/merge` cleanup to work.
@@ -102,7 +108,7 @@ The `<slug>` MUST be identical across all three for `/merge` cleanup to work.
 ## Rules
 
 1. NEVER ask user for slug name - generate automatically
-2. Location: sibling dirs (`../${PROJECT_NAME}-<slug>`)
+2. Location: `REPO_ROOT/.claude/worktrees/<slug>`
 3. Shared target dir via `~/.cargo/config.toml` -- no cache copying needed
 4. All work happens in the worktree, not the main repo
 5. Never push -- user pushes after review

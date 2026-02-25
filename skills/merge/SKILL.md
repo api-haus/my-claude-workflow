@@ -33,7 +33,7 @@ Before running `/merge`, ensure:
 | Component | Format |
 |-----------|--------|
 | Todo file | `docs/todo/<slug>.md` |
-| Worktree | `../${PROJECT_NAME}-<slug>` |
+| Worktree | `.claude/worktrees/<slug>` |
 | Branch | `<type>/<slug>` |
 
 The slug is extracted from the branch name after the prefix.

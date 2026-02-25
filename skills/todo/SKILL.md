@@ -17,7 +17,7 @@ Save tasks, ideas, or follow-ups discovered while working to docs/todo.
 | Component | Format | Example |
 |-----------|--------|---------|
 | Todo file | `docs/todo/<slug>.md` | `docs/todo/player-collision.md` |
-| Worktree | `../${PROJECT_NAME}-<slug>` | `../${PROJECT_NAME}-player-collision` |
+| Worktree | `.claude/worktrees/<slug>` | `.claude/worktrees/player-collision` |
 | Branch | `<type>/<slug>` | `feat/player-collision` |
 
 ## Process

@@ -28,15 +28,17 @@ Arguments can appear in any order. `/worktree` is detected anywhere in the argum
 4. **If `/worktree` was specified**, set up isolated worktree:
    - Check for existing worktree:
      ```bash
-     if [ -d "../${PROJECT_NAME}-<slug>" ]; then
+     REPO_ROOT=$(git rev-parse --show-toplevel)
+     if [ -d "${REPO_ROOT}/.claude/worktrees/<slug>" ]; then
          echo "Worktree exists, switching..."
-         cd ../${PROJECT_NAME}-<slug>
+         cd "${REPO_ROOT}/.claude/worktrees/<slug>"
      fi
      ```
    - Create worktree if needed:
      ```bash
-     git worktree add ../${PROJECT_NAME}-<slug> -b <type>/<slug>
-     cd ../${PROJECT_NAME}-<slug>
+     mkdir -p "${REPO_ROOT}/.claude/worktrees"
+     git worktree add "${REPO_ROOT}/.claude/worktrees/<slug>" -b <type>/<slug> main
+     cd "${REPO_ROOT}/.claude/worktrees/<slug>"
      ```
 
 5. **If `/worktree` was NOT specified**, work in the current directory:
@@ -52,7 +54,7 @@ Only relevant when `/worktree` is used:
 | Component | Format | Example |
 |-----------|--------|---------|
 | Todo file | `docs/todo/<slug>.md` | `docs/todo/player-collision.md` |
-| Worktree | `../${PROJECT_NAME}-<slug>` | `../${PROJECT_NAME}-player-collision` |
+| Worktree | `.claude/worktrees/<slug>` | `.claude/worktrees/player-collision` |
 | Branch | `<type>/<slug>` | `feat/player-collision` |
 
 The `<slug>` must be identical across all three.
@@ -68,7 +70,7 @@ When entering plan mode, ALWAYS include at the top of the plan:
 
 If working in a worktree, also include:
 ```markdown
-- **Worktree:** `../${PROJECT_NAME}-<slug>`
+- **Worktree:** `${REPO_ROOT}/.claude/worktrees/<slug>`
 - **Branch:** `<type>/<slug>`
 ```
 

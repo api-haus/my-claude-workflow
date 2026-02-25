@@ -12,7 +12,7 @@ Read documentation and populate docs/todo with tasks.
 | Component | Format | Example |
 |-----------|--------|---------|
 | Todo file | `docs/todo/<slug>.md` | `docs/todo/player-collision.md` |
-| Worktree | `../${PROJECT_NAME}-<slug>` | `../${PROJECT_NAME}-player-collision` |
+| Worktree | `.claude/worktrees/<slug>` | `.claude/worktrees/player-collision` |
 | Branch | `<type>/<slug>` | `feat/player-collision` |
 
 Use kebab-case slugs that match potential branch names.
