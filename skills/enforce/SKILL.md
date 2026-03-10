@@ -15,7 +15,7 @@ Prevents common failure patterns before they start.
 
 1. **Reads CLAUDE.md** from project root
 2. **Extracts hard rules** (NEVER, ALWAYS, MUST, etc.)
-3. **Loads active todo** from docs/todo/ if exists
+3. **Loads active todos** from `docs/todo/` and `docs/_internal/todo/` if they exist
 4. **Injects into context** as system-level constraints
 5. **Sets guardrails** for the session
 

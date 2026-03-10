@@ -24,15 +24,17 @@ Before running `/merge`, ensure:
 5. Merge the branch: `git merge <branch-name> --no-edit`
 6. Remove the worktree: `git worktree remove <worktree-path>`
 7. Delete the branch: `git branch -d <branch-name>`
-8. Delete the todo file: `rm docs/todo/<slug>.md` (if exists)
-9. Commit the todo removal: `git add -A && git commit -m "chore: remove completed todo <slug>"`
+8. Delete the todo file from either location (if exists):
+   - `rm docs/todo/<slug>.md` (tracked)
+   - `rm docs/_internal/todo/<slug>.md` (gitignored)
+9. Commit the todo removal (only if a tracked file was deleted): `git add -A && git commit -m "chore: remove completed todo <slug>"`
 10. Do NOT push unless explicitly requested
 
 ## Naming Convention
 
 | Component | Format |
 |-----------|--------|
-| Todo file | `docs/todo/<slug>.md` |
+| Todo file | `docs/todo/<slug>.md` or `docs/_internal/todo/<slug>.md` |
 | Worktree | `.claude/worktrees/<slug>` |
 | Branch | `<type>/<slug>` |
 

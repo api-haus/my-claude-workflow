@@ -5,7 +5,16 @@ description: Add tasks or ideas discovered during work to docs/todo
 
 # Todo
 
-Save tasks, ideas, or follow-ups discovered while working to docs/todo.
+Save tasks, ideas, or follow-ups discovered while working.
+
+## Todo Directories
+
+| Directory | Tracked | Purpose |
+|-----------|---------|---------|
+| `docs/todo/` | Yes | Public tasks safe for git history |
+| `docs/_internal/todo/` | No (gitignored) | Tasks with sensitive references or internal notes |
+
+Default: `docs/todo/`. Use `docs/_internal/todo/` when the task references proprietary implementations or external codebases.
 
 ## Usage
 
@@ -16,7 +25,7 @@ Save tasks, ideas, or follow-ups discovered while working to docs/todo.
 
 | Component | Format | Example |
 |-----------|--------|---------|
-| Todo file | `docs/todo/<slug>.md` | `docs/todo/player-collision.md` |
+| Todo file | `docs/todo/<slug>.md` or `docs/_internal/todo/<slug>.md` | `docs/todo/player-collision.md` |
 | Worktree | `.claude/worktrees/<slug>` | `.claude/worktrees/player-collision` |
 | Branch | `<type>/<slug>` | `feat/player-collision` |
 

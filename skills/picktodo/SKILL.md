@@ -7,6 +7,15 @@ description: Pick a todo task, create worktree if needed, and begin work
 
 Select a todo task and begin work.
 
+## Todo Directories
+
+Todos live in two locations — search both:
+
+| Directory | Tracked | Purpose |
+|-----------|---------|---------|
+| `docs/todo/` | Yes | Public tasks safe for git history |
+| `docs/_internal/todo/` | No (gitignored) | Tasks with sensitive references or internal notes |
+
 ## Usage
 
 `/picktodo [task-slug]` - Pick a task, work in current directory
@@ -20,10 +29,12 @@ Arguments can appear in any order. `/worktree` is detected anywhere in the argum
 
 2. **List available todos** if no slug given:
    ```bash
-   ls docs/todo/*.md
+   ls docs/todo/*.md docs/_internal/todo/*.md 2>/dev/null
    ```
 
-3. **Parse the task** from `docs/todo/<slug>.md`
+3. **Parse the task** - Look in both directories:
+   - `docs/todo/<slug>.md`
+   - `docs/_internal/todo/<slug>.md`
 
 4. **If `/worktree` was specified**, set up isolated worktree:
    - Check for existing worktree:
@@ -53,11 +64,11 @@ Only relevant when `/worktree` is used:
 
 | Component | Format | Example |
 |-----------|--------|---------|
-| Todo file | `docs/todo/<slug>.md` | `docs/todo/player-collision.md` |
+| Todo file | `docs/todo/<slug>.md` or `docs/_internal/todo/<slug>.md` | `docs/todo/player-collision.md` |
 | Worktree | `.claude/worktrees/<slug>` | `.claude/worktrees/player-collision` |
 | Branch | `<type>/<slug>` | `feat/player-collision` |
 
-The `<slug>` must be identical across all three.
+The `<slug>` must be identical across worktree and branch. The todo file may be in either directory.
 
 ## Plan Mode Requirement
 
@@ -65,7 +76,7 @@ When entering plan mode, ALWAYS include at the top of the plan:
 
 ```markdown
 ## Context
-- **Todo:** `docs/todo/<slug>.md`
+- **Todo:** `docs/todo/<slug>.md` (or `docs/_internal/todo/<slug>.md`)
 ```
 
 If working in a worktree, also include:
