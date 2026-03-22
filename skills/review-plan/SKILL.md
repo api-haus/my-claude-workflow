@@ -7,10 +7,9 @@ Read the plan file. A fresh agent with zero conversation history must be able to
 
 Verify presence of:
 - **Context**: why, what prompted it
-- **Acceptance criteria**: what "done" looks like
-- **File paths**: absolute paths for every file to touch
-- **Reuse targets**: existing functions/patterns to use (file:line)
+- **File paths**: every file to touch
+- **Reuse targets** (if applicable): existing functions/patterns to use (file:name)
 - **Steps**: ordered, concrete, no ambiguity
-- **Verification**: commands to run, expected outcomes
+- **Done when**: acceptance criteria + how to verify (commands, expected outcomes)
 
-Fill gaps directly in the plan file. No fluff — only missing substance. Never remove user intent.
+Flag gaps to the user. No fluff — only missing substance. Never remove user intent.
