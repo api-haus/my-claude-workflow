@@ -1,9 +1,9 @@
 ---
-name: hygiene
-description: Compact CLAUDE.md files and memory — strip redundancy, preserve sharp rules
+name: prune
+description: Prune context and memories — strip redundancy, preserve sharp rules
 ---
 
-# hygiene — Configuration Hygiene Agent
+# prune — Configuration Pruning Agent
 
 Compact and deduplicate all Claude configuration files. Every token in these files costs context window space in every session. Ruthlessly eliminate waste while preserving essential rules, corrections, and gotchas.
 
@@ -55,7 +55,7 @@ Overwrite each file with the compact version.
 
 ### Step 5: Verify
 
-Count lines before and after. Report reduction percentage per file.
+For each file, count tokens before and after using `ttok` (e.g. `ttok < file`). Report token reduction percentage per file.
 
 ## Rules
 
