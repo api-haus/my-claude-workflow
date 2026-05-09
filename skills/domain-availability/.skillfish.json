@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "domain-availability",
+  "owner": "jcoulaud",
+  "repo": "builderkit",
+  "path": "plugins/domain-finder/skills/domain-availability",
+  "branch": "main",
+  "sha": "1ba5f599351a81b3e71e655f3990f947cd3de20b",
+  "source": "manual"
+}
